@@ -1,0 +1,42 @@
+<?php
+  /** @var \Howard\ToggleMsrp\Block\CheckLoggedIn $block */
+ ?>
+
+ <?php $checkIsLoggedIn = $block->renderMsrpToggle(); ?>
+
+<?php if($checkIsLoggedIn): ?>
+
+  <div class="presentation-mode">
+    <label for="msrp-toggle">Presentation Mode</label>
+    <input type="checkbox" id="msrp-toggle" name="msrp-toggle">
+  </div>
+  <script type="text/javascript">
+    require(['jquery'], function($){
+
+      // On page load events
+      $(document).ready(function() {
+        if (sessionStorage.msrp_toggle == "true") {
+          $('.special-price, .product-add-form, .bottom-action').hide();
+          $( "#msrp-toggle" ).prop( "checked", true );
+          $('.price-box .old-price .price').css("text-decoration", "none");
+        }
+      })
+      //
+
+      // Check box onchange events
+      $('#msrp-toggle').change(function() {
+        if(this.checked) {
+          sessionStorage.msrp_toggle = true;
+          $('.special-price, .product-add-form, .bottom-action').hide();
+          $('.price-box .old-price .price').css("text-decoration", "none");
+        } else {
+          $('.special-price, .product-add-form, .bottom-action').show();
+          $('.price-box .old-price .price').css("text-decoration", "line-through");
+          sessionStorage.msrp_toggle = false;
+        }
+      })
+      //
+    })
+  </script>
+
+<?php endif; ?>
